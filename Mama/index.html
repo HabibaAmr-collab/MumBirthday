@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مفاجأة عيد الميلاد! 🎉</title>
+    <!-- مكتبة الـ Confetti الخفيف الهادئ في الآخر -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            background-color: #fff0f3;
+            font-family: 'Tahoma', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 50px 20px;
+            color: #333;
+        }
+        .screen {
+            display: none;
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .active {
+            display: block;
+        }
+        h1, h2 {
+            color: #d81159;
+        }
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #76686f;
+        }
+        .btn {
+            background-color: #ff4d6d;
+            color: rgb(232, 224, 224);
+            border: none;
+            padding: 12px 30px;
+            font-size: 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            margin: 10px 4px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background-color: #c9184a;
+        }
+
+        /* تنسيق صور الذكريات */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .gallery img {
+            width: 100%;
+            object-fit: cover;
+            aspect-ratio: 1/1;
+            border-radius: 10px;
+        }
+        /* تصميم الجواب المقفول */
+        .envelope {
+            font-size: 80px;
+            cursor: pointer;
+            margin: 20px 0;
+            transition: transform 0.3s;
+        }
+        .envelope:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الأغنية الأولى الهادية (للصور) -->
+    <audio id="birthdaySong" src="[@download_it_bot mp3] احلا موسيقى هادئه و.mp3" preload="auto"></audio>
+
+    <!-- الأغنية الثانية الفرايحي (للشاشة الأخيرة مع الطوق) -->
+    <audio id="finalPartySong" src="M.mp3" preload="auto"></audio>
+
+    <!-- الشاشة الأولى: الترحيب -->
+    <div id="screen1" class="screen active">
+        <h1>كل سنة وأنتِ طيبة يا مامتي 💖</h1>
+        <p>تستحقي كل حاجة حلوة في الدنيا ❤️</p>
+        <button class="btn" onclick="nextScreen(2)">🍒 اضغطي هنا يا كوتي</button>
+    </div>
+
+    <!-- الشاشة الثانية: مقدمة الذكريات -->
+    <div id="screen2" class="screen">
+        <h2>الأول بس ..</h2>
+        <p>نشوف مراحل تكوين القمر !</p>
+        <button class="btn" onclick="nextScreen(3)">يلا بينا</button>
+    </div>
+
+    <!-- الشاشة الثالثة: الصور (هنا هتشتغل الأغنية الهادية لوحدها) -->
+    <div id="screen3" class="screen">
+        <p class="M" style="font-weight: bold; color: #d81159;">ابتسامتك هي مصدر القوة لينا كلنا❤️</p>
+        <div class="gallery">
+            <img src="IMAGE 2026-10-27 00:48:32.jpg" alt="ذكرياتنا 1">
+            <img src="IMAGE 2026-10-27 00:48:14.jpg" alt="ذكرياتنا 2">
+            <img src="IMAGE 2026-10-27 00:48:23.jpg" alt="ذكرياتنا 3">
+            <img src="IMAGE 2026-10-27 00:47:46.jpg" alt="ذكرياتنا 4">
+        </div>
+        <button class="btn" onclick="nextScreen(4)">اضغطي هنا يا كوتي 🍒</button>
+    </div>
+
+    <!-- الشاشة الرابعة: الجواب المقفول -->
+    <div id="screen4" class="screen">
+        <h2>الفقرة المفضلة في كل عيد ميلاد💌</h2>
+        <p>في جواب مستنيكِ هنا، اضغطي عليه عشان تفتحيه:</p>
+        <div class="envelope" onclick="nextScreen(5)">✉️</div>
+    </div>
+
+    <!-- الشاشة الخامسة: الورقة والجواب الحقيقي -->
+    <div id="screen5" class="screen">
+        <h2>رسالة من واحدة شايفة فيكي كل حاجة حلوة💕</h2>
+        <p style="background: #fff0f3; padding: 15px; border-radius: 10px; border: 1px dashed #ff4d6d;">
+            "خدي الجواب مني دلوقتي واقرأيه.."
+        </p>
+        <p style="font-size: 15px; color: #777;">(بعد ما تخلصي قراءة الجواب، اضغطي هنا 👇)</p>
+        <button class="btn" onclick="finishAndCelebrat()">عملت كده 🍓</button>
+    </div>
+
+    <!-- الشاشة السادسة: الختامية -->
+    <div id="screen6" class="screen">
+        <h1>✨ جيه وقت احتفالي بيكي 🥳 ✨</h1>
+        <button class="btn" onclick="startFinalParty()">اضغطي هنا يا كوتي 🍒</button>
+        <p style="font-size: 17px; color: #888; margin-top: 20px;">كل سنة وأنتِ منورة حياتنا كلنا ❤️</p>
+    </div>
+
+    <script>
+        const song = document.getElementById('birthdaySong');
+        const finalPartySong = document.getElementById('finalPartySong');
+
+        // إيقاف جميع الأصوات
+        function stopMusic() {
+            if (song) {
+                song.pause();
+                song.currentTime = 0;
+            }
+            if (finalPartySong) {
+                finalPartySong.pause();
+                finalPartySong.currentTime = 0;
+            }
+        }
+
+        // الانتقال للشاشة التالية
+        function nextScreen(screenNumber) {
+            stopMusic();
+
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(screen => screen.classList.remove('active'));
+            
+            const targetScreen = document.getElementById('screen' + screenNumber);
+            if (targetScreen) {
+                targetScreen.classList.add('active');
+            }
+
+            // تشغيل الموسيقى الهادية في الشاشة الثالثة فقط
+            if (screenNumber === 3 && song) {
+                song.play().catch(error => console.log("تفاعل المتصفح مطلوب"));
+            }
+        }
+
+        // الانتقال للشاشة السادسة (صفحة الاحتفال)
+        function finishAndCelebrat() {
+            nextScreen(6);
+        }
+
+        // إطلاق الأغنية الفرايحي والـ Confetti عند الضغط على الزرار في الشاشة الأخيرة
+        function startFinalParty() {
+            if (finalPartySong) {
+                finalPartySong.play().catch(error => console.log("تفاعل المتصفح مطلوب"));
+            }
+            confetti({
+                particleCount: 100,
+                spread: 80,
+                origin: { y: 0.6 }
+            });
+        }
+    </script>
+
+</body>
+</html>
